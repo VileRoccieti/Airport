@@ -267,7 +267,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="PassengerIndicative">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -279,7 +279,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField2">
+                <Component class="javax.swing.JTextField" name="PassengerID">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -291,7 +291,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField3">
+                <Component class="javax.swing.JTextField" name="YEAR">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -303,7 +303,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField4">
+                <Component class="javax.swing.JTextField" name="PassengerCountry">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -315,7 +315,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField5">
+                <Component class="javax.swing.JTextField" name="PassngerPhone">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -353,7 +353,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField6">
+                <Component class="javax.swing.JTextField" name="PassengerLastName">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -398,7 +398,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField7">
+                <Component class="javax.swing.JTextField" name="PassengerFirstName">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -487,7 +487,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField8">
+                <Component class="javax.swing.JTextField" name="AirplaneID">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -512,7 +512,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField9">
+                <Component class="javax.swing.JTextField" name="AirplaneBranch">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -524,7 +524,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField10">
+                <Component class="javax.swing.JTextField" name="AirplaneModel">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -549,7 +549,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField11">
+                <Component class="javax.swing.JTextField" name="AirpleaneMaxCapacity">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -574,7 +574,7 @@
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField12">
+                <Component class="javax.swing.JTextField" name="AirplaneAirline">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -643,12 +643,12 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextField18" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="jTextField13" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="jTextField14" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="jTextField15" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="jTextField16" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="jTextField17" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="LocationRegistrationAirportLongitude" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="LocationRegistrationAirportID" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="LocationRegistrationAirportName" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="LocationRegistrationAirportCity" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="LocationRegistrationAirportCountry" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="LocationRegistrationAirportLatitude" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -677,21 +677,21 @@
                                   <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jTextField13" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LocationRegistrationAirportID" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                                  <Component id="jTextField14" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LocationRegistrationAirportName" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
-                                  <Component id="jTextField15" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LocationRegistrationAirportCity" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
-                                  <Component id="jTextField16" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LocationRegistrationAirportCountry" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
-                                  <Component id="jTextField17" min="-2" max="-2" attributes="0"/>
+                                  <Component id="LocationRegistrationAirportLatitude" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField18" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="LocationRegistrationAirportLongitude" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="51" max="32767" attributes="0"/>
                           <Component id="jButton10" min="-2" pref="40" max="-2" attributes="0"/>
@@ -709,7 +709,7 @@
                     <Property name="text" type="java.lang.String" value="Airport ID:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField13">
+                <Component class="javax.swing.JTextField" name="LocationRegistrationAirportID">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -724,14 +724,14 @@
                     <Property name="text" type="java.lang.String" value="Airport name:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField14">
+                <Component class="javax.swing.JTextField" name="LocationRegistrationAirportName">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField15">
+                <Component class="javax.swing.JTextField" name="LocationRegistrationAirportCity">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -754,14 +754,14 @@
                     <Property name="text" type="java.lang.String" value="Airport country:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField16">
+                <Component class="javax.swing.JTextField" name="LocationRegistrationAirportCountry">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField17">
+                <Component class="javax.swing.JTextField" name="LocationRegistrationAirportLatitude">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -784,7 +784,7 @@
                     <Property name="text" type="java.lang.String" value="Airport longitude:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField18">
+                <Component class="javax.swing.JTextField" name="LocationRegistrationAirportLongitude">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -822,17 +822,17 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jComboBox4" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="FlightRegistrationScaleLocation" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jComboBox3" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="FlightRegistrationArrivalLocation" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                                  <Component id="jComboBox2" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="FlightRegistrationLocation" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -841,8 +841,8 @@
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jTextField19" max="32767" attributes="0"/>
-                                      <Component id="jComboBox1" pref="130" max="32767" attributes="0"/>
+                                      <Component id="FlightRegistrationID" max="32767" attributes="0"/>
+                                      <Component id="FlightRegistrationPlane" pref="130" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -855,12 +855,12 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jTextField21" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Component id="FlightRegistrationDepartureYear" min="-2" pref="90" max="-2" attributes="0"/>
                                   <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                          <Component id="MONTH1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationDepartureDateMonth" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jLabel30" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
@@ -869,14 +869,14 @@
                                       <Component id="jLabel31" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                          <Component id="DAY1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationDepartureDateDay" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                          <Component id="MONTH2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationDepartureDateHour" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jLabel32" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
@@ -885,7 +885,7 @@
                                       <Component id="jLabel33" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                          <Component id="DAY2" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationMinute" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -893,18 +893,18 @@
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="MONTH3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationDurationHour" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel34" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                                                  <Component id="DAY3" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="FlightRegistrationDurationMinute" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="MONTH4" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationDurationHour2" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="14" pref="14" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel35" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
@@ -935,51 +935,51 @@
                                   <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                                   <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jTextField19" min="-2" max="-2" attributes="0"/>
+                              <Component id="FlightRegistrationID" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="FlightRegistrationPlane" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="MONTH2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="FlightRegistrationDepartureDateHour" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="DAY2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="FlightRegistrationMinute" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="jTextField21" min="-2" max="-2" attributes="0"/>
-                                      <Component id="MONTH1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="FlightRegistrationDepartureYear" min="-2" max="-2" attributes="0"/>
+                                      <Component id="FlightRegistrationDepartureDateMonth" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DAY1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="FlightRegistrationDepartureDateDay" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationArrivalLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="MONTH3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="FlightRegistrationDurationHour" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel34" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="DAY3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="FlightRegistrationDurationMinute" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="MONTH4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="FlightRegistrationDurationHour2" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="DAY4" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBox4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="FlightRegistrationScaleLocation" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1001,7 +1001,7 @@
                     <Property name="text" type="java.lang.String" value="ID:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField19">
+                <Component class="javax.swing.JTextField" name="FlightRegistrationID">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1016,7 +1016,7 @@
                     <Property name="text" type="java.lang.String" value="Plane:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationPlane">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1027,11 +1027,14 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="FlightRegistrationPlaneActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox2">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationLocation">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1054,7 +1057,7 @@
                     <Property name="text" type="java.lang.String" value="Departure location:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox3">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationArrivalLocation">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1085,7 +1088,7 @@
                     <Property name="text" type="java.lang.String" value="Scale location:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox4">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationScaleLocation">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1124,7 +1127,7 @@
                     <Property name="text" type="java.lang.String" value="Departure date:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField21">
+                <Component class="javax.swing.JTextField" name="FlightRegistrationDepartureYear">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1139,7 +1142,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH1">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationDepartureDateMonth">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1162,7 +1165,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="DAY1">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationDepartureDateDay">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1185,7 +1188,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH2">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationDepartureDateHour">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1208,7 +1211,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="DAY2">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationMinute">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1223,7 +1226,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH3">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationDurationHour">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1246,7 +1249,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="DAY3">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationDurationMinute">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1269,7 +1272,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH4">
+                <Component class="javax.swing.JComboBox" name="FlightRegistrationDurationHour2">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1332,37 +1335,37 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="108" pref="108" max="-2" attributes="0"/>
-                                          <Component id="jTextField20" min="-2" pref="130" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoID" min="-2" pref="130" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="41" pref="41" max="-2" attributes="0"/>
-                                          <Component id="jTextField22" min="-2" pref="130" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoFirstName" min="-2" pref="130" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="43" pref="43" max="-2" attributes="0"/>
-                                          <Component id="jTextField23" min="-2" pref="130" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoLastName" min="-2" pref="130" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="55" pref="55" max="-2" attributes="0"/>
-                                          <Component id="jTextField24" min="-2" pref="90" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoBirthDateYear" min="-2" pref="90" max="-2" attributes="0"/>
                                           <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
-                                          <Component id="MONTH5" min="-2" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoBirthDateMonth" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="34" pref="34" max="-2" attributes="0"/>
-                                          <Component id="DAY5" min="-2" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoBirthDateDay" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="56" pref="56" max="-2" attributes="0"/>
                                           <Component id="jLabel41" min="-2" pref="20" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                          <Component id="jTextField26" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoPhoneIndicative" min="-2" pref="50" max="-2" attributes="0"/>
                                           <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                                           <Component id="jLabel40" min="-2" pref="30" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                          <Component id="jTextField25" min="-2" pref="130" max="-2" attributes="0"/>
+                                          <Component id="UpdateInfoPhone" min="-2" pref="130" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel43" min="-2" max="-2" attributes="0"/>
@@ -1376,7 +1379,7 @@
                                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="555" max="32767" attributes="0"/>
+                          <EmptySpace pref="552" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1386,32 +1389,32 @@
                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField20" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoID" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="39" pref="39" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField22" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoFirstName" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField23" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoLastName" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField24" min="-2" max="-2" attributes="0"/>
-                              <Component id="MONTH5" min="-2" max="-2" attributes="0"/>
-                              <Component id="DAY5" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoBirthDateYear" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoBirthDateMonth" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoBirthDateDay" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel41" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField26" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoPhoneIndicative" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField25" min="-2" max="-2" attributes="0"/>
+                              <Component id="UpdateInfoPhone" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -1434,7 +1437,7 @@
                     <Property name="text" type="java.lang.String" value="ID:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField20">
+                <Component class="javax.swing.JTextField" name="UpdateInfoID">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1451,7 +1454,7 @@
                     <Property name="text" type="java.lang.String" value="First Name:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField22">
+                <Component class="javax.swing.JTextField" name="UpdateInfoFirstName">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1466,7 +1469,7 @@
                     <Property name="text" type="java.lang.String" value="Last Name:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField23">
+                <Component class="javax.swing.JTextField" name="UpdateInfoLastName">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1481,14 +1484,14 @@
                     <Property name="text" type="java.lang.String" value="Birthdate:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField24">
+                <Component class="javax.swing.JTextField" name="UpdateInfoBirthDateYear">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="MONTH5">
+                <Component class="javax.swing.JComboBox" name="UpdateInfoBirthDateMonth">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1503,7 +1506,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="DAY5">
+                <Component class="javax.swing.JComboBox" name="UpdateInfoBirthDateDay">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1518,7 +1521,7 @@
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField25">
+                <Component class="javax.swing.JTextField" name="UpdateInfoPhone">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1533,7 +1536,7 @@
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField26">
+                <Component class="javax.swing.JTextField" name="UpdateInfoPhoneIndicative">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1604,8 +1607,8 @@
                           </Group>
                           <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboBox5" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField28" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="AddFlightFlight" min="-2" max="-2" attributes="0"/>
+                              <Component id="AddFlightID" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="829" max="32767" attributes="0"/>
                       </Group>
@@ -1625,12 +1628,12 @@
                                   <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
                                   <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jTextField28" min="-2" max="-2" attributes="0"/>
+                              <Component id="AddFlightID" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel45" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="AddFlightFlight" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="288" max="32767" attributes="0"/>
                           <Component id="jButton12" min="-2" pref="40" max="-2" attributes="0"/>
@@ -1640,7 +1643,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JTextField" name="jTextField28">
+                <Component class="javax.swing.JTextField" name="AddFlightID">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1664,7 +1667,7 @@
                     <Property name="text" type="java.lang.String" value="Flight:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox5">
+                <Component class="javax.swing.JComboBox" name="AddFlightFlight">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1736,7 +1739,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable1">
+                    <Component class="javax.swing.JTable" name="ShowMyFlightsTable">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1812,7 +1815,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable2">
+                    <Component class="javax.swing.JTable" name="ShowAllPassengersTable">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1892,7 +1895,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable3">
+                    <Component class="javax.swing.JTable" name="ShowAllFlightsTable">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -1984,7 +1987,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable4">
+                    <Component class="javax.swing.JTable" name="ShowAllPlanesTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="6" rowCount="0">
@@ -2049,7 +2052,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable5">
+                    <Component class="javax.swing.JTable" name="ShowAllLocationsTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="0">
@@ -2094,7 +2097,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel48" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jComboBox8" min="-2" pref="109" max="-2" attributes="0"/>
+                                  <Component id="DelayMinutes" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -2103,8 +2106,8 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jComboBox6" pref="105" max="32767" attributes="0"/>
-                                      <Component id="jComboBox7" max="32767" attributes="0"/>
+                                      <Component id="DelayHours" pref="105" max="32767" attributes="0"/>
+                                      <Component id="DelayID" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -2123,17 +2126,17 @@
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel47" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox7" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="DelayID" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox6" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="DelayHours" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel48" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jComboBox8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="DelayMinutes" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="307" max="32767" attributes="0"/>
                           <Component id="jButton7" min="-2" max="-2" attributes="0"/>
@@ -2143,7 +2146,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JComboBox" name="jComboBox6">
+                <Component class="javax.swing.JComboBox" name="DelayHours">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2174,7 +2177,7 @@
                     <Property name="text" type="java.lang.String" value="ID:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox7">
+                <Component class="javax.swing.JComboBox" name="DelayID">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
@@ -2197,7 +2200,7 @@
                     <Property name="text" type="java.lang.String" value="Minutes:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox8">
+                <Component class="javax.swing.JComboBox" name="DelayMinutes">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Yu Gothic UI" size="18" style="0"/>
