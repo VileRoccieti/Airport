@@ -1,0 +1,4 @@
+110, Boeing, 747, 200, Emirates, 0
+001, Boeing, 747, 200, Emirates, 0
+1212, boeing, 747, 1000, latam, 0
+1313412, ascsad, asxdcasd, 123123, asacasxf, 0
