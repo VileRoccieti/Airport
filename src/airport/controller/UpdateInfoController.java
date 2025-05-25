@@ -4,20 +4,19 @@
  */
 package airport.controller;
 
-import airport.Passenger;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  *
@@ -36,7 +35,6 @@ public class UpdateInfoController {
             String phoneStr,
             String country) {
 
-        // Validaciones básicas
         if (idStr == null || idStr.trim().isEmpty()) {
             return new Response("Falta el ID", Status.BAD_REQUEST);
         }
@@ -102,66 +100,41 @@ public class UpdateInfoController {
             return new Response("Edad inválida calculada", Status.BAD_REQUEST);
         }
 
-        File file = new File("passengers.txt");
-        List<Passenger> passengers = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",\\s*");
-                if (parts.length >= 7) {
-                    long currentId = Long.parseLong(parts[0].trim());
-                    String[] names = parts[1].split(" ");
-                    String fn = names[0];
-                    String ln = names.length > 1 ? names[1] : "";
-                    LocalDate bd = LocalDate.parse(parts[2].trim());
-                    String phoneFull = parts[4];
-                    String[] phoneParts = phoneFull.split(" ");
-                    int pc = Integer.parseInt(phoneParts[0].replace("+", ""));
-                    long ph = Long.parseLong(phoneParts[1]);
-                    String ctry = parts[5];
-
-                    passengers.add(new Passenger(currentId, fn, ln, bd, pc, ph, ctry));
-                }
-            }
-        } catch (IOException e) {
-            return new Response("Error leyendo archivo: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        File file = new File("json/passengers.json");
+        if (!file.exists()) {
+            return new Response("Archivo passengers.json no encontrado", Status.INTERNAL_SERVER_ERROR);
         }
 
-        Passenger passengerToUpdate = null;
-        for (Passenger p : passengers) {
-            if (p.getId() == id) {
-                passengerToUpdate = p;
+        JSONArray passengersArray;
+        try (InputStream is = new FileInputStream(file)) {
+            passengersArray = new JSONArray(new JSONTokener(is));
+        } catch (IOException e) {
+            return new Response("Error leyendo archivo JSON: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        }
+
+        boolean found = false;
+        for (int i = 0; i < passengersArray.length(); i++) {
+            JSONObject p = passengersArray.getJSONObject(i);
+            if (p.getLong("id") == id) {
+                p.put("firstname", firstName);
+                p.put("lastname", lastName);
+                p.put("birthDate", birthDate.toString());
+                p.put("countryPhoneCode", phoneCode);
+                p.put("phone", phone);
+                p.put("country", country);
+                found = true;
                 break;
             }
         }
 
-        if (passengerToUpdate == null) {
+        if (!found) {
             return new Response("Pasajero con ID " + id + " no encontrado.", Status.NOT_FOUND);
         }
 
-        passengerToUpdate.setFirstname(firstName);
-        passengerToUpdate.setLastname(lastName);
-        passengerToUpdate.setBirthDate(birthDate);
-        passengerToUpdate.setCountryPhoneCode(phoneCode);
-        passengerToUpdate.setPhone(phone);
-        passengerToUpdate.setCountry(country);
-
-        List<String> lines = new ArrayList<String>();
-        for (Passenger p : passengers) {
-            int calculatedAge = Period.between(p.getBirthDate(), LocalDate.now()).getYears();
-            String phoneFormatted = "+" + p.getCountryPhoneCode() + " " + p.getPhone();
-            String line = String.format("%d, %s %s, %s, %d, %s, %s, AB123",
-                    p.getId(), p.getFirstname(), p.getLastname(),
-                    p.getBirthDate().toString(), calculatedAge, phoneFormatted, p.getCountry());
-            lines.add(line);
-        }
-
-        try (PrintWriter pw = new PrintWriter(new FileWriter(file, false))) {
-            for (String l : lines) {
-                pw.println(l);
-            }
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write(passengersArray.toString(4));  // Indentado para mejor lectura
         } catch (IOException e) {
-            return new Response("Error escribiendo archivo: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+            return new Response("Error escribiendo archivo JSON: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
 
         return new Response("Datos actualizados correctamente", Status.OK);

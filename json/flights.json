@@ -4,7 +4,7 @@
         "minutesDurationScale": 0,
         "departureLocation": "JFK",
         "scaleLocation": null,
-        "registeredPassengers": "158484546,28171784",
+        "registeredPassengers": "158484546,28171784,314747359",
         "minutesDurationArrival": 15,
         "id": "FLY001",
         "departureDate": "2025-06-01T17:32:00",
@@ -157,5 +157,31 @@
         "hoursDurationScale": 10,
         "arrivalLocation": "asd",
         "hoursDurationArrival": 3
+    },
+    {
+        "plane": "AB12345",
+        "minutesDurationScale": 5,
+        "departureLocation": "JFK",
+        "scaleLocation": "CDG",
+        "minutesDurationArrival": 11,
+        "id": "99999",
+        "departureDate": "0012-02-24T01:30",
+        "hoursDurationScale": 5,
+        "arrivalLocation": "SYD",
+        "hoursDurationArrival": 11,
+        "arrivalDate": "0012-02-24T17:46"
+    },
+    {
+        "plane": "KL33445",
+        "minutesDurationScale": 27,
+        "departureLocation": "JFK",
+        "scaleLocation": "JFK",
+        "minutesDurationArrival": 13,
+        "id": "999991",
+        "departureDate": "2025-05-07T07:12",
+        "hoursDurationScale": 20,
+        "arrivalLocation": "HND",
+        "hoursDurationArrival": 8,
+        "arrivalDate": "2025-05-08T11:52"
     }
 ]

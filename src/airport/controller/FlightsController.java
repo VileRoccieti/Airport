@@ -4,64 +4,115 @@
  */
 package airport.controller;
 
+import airport.Flight;
+import airport.Location;
+import airport.Plane;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  *
  * @author plobb
  */
 public class FlightsController {
-    public static Response validateFlightData(
-        String id,
-        String planeId,
-        String departureLocationId,
-        String arrivalLocationId,
-        String scaleLocationId,
-        String yearStr,
-        String monthStr,
-        String dayStr,
-        String hourStr,
-        String minuteStr,
-        String durationHourStr,
-        String durationMinuteStr,
-        String scaleDurationHourStr,
-        String scaleDurationMinuteStr
+
+    public static Response createFlight(
+            String id,
+            String planeId,
+            String departureLocationId,
+            String arrivalLocationId,
+            String scaleLocationId,
+            String yearStr,
+            String monthStr,
+            String dayStr,
+            String hourStr,
+            String minuteStr,
+            String durationHourStr,
+            String durationMinuteStr,
+            String scaleDurationHourStr,
+            String scaleDurationMinuteStr
     ) {
-        if (id == null || id.trim().isEmpty()) return new Response("ID no puede estar vacío", Status.BAD_REQUEST);
-        if (planeId == null || planeId.trim().isEmpty()) return new Response("Debe seleccionar un avión", Status.BAD_REQUEST);
-        if (departureLocationId == null || departureLocationId.trim().isEmpty()) return new Response("Debe seleccionar lugar de salida", Status.BAD_REQUEST);
-        if (arrivalLocationId == null || arrivalLocationId.trim().isEmpty()) return new Response("Debe seleccionar lugar de llegada", Status.BAD_REQUEST);
+        if (id.isBlank() || planeId.isBlank() || departureLocationId.isBlank() || arrivalLocationId.isBlank()
+                || yearStr.isBlank() || monthStr.isBlank() || dayStr.isBlank()
+                || hourStr.isBlank() || minuteStr.isBlank()
+                || durationHourStr.isBlank() || durationMinuteStr.isBlank()) {
+            return new Response("Todos los campos obligatorios deben estar completos", Status.BAD_REQUEST);
+        }
+
+        File file = new File("json/flights.json");
+        JSONArray flightsArray;
 
         try {
+            if (file.exists()) {
+                try (InputStream is = new FileInputStream(file)) {
+                    flightsArray = new JSONArray(new JSONTokener(is));
+                }
+            } else {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+                flightsArray = new JSONArray();
+            }
+
+            for (int i = 0; i < flightsArray.length(); i++) {
+                JSONObject existingFlight = flightsArray.getJSONObject(i);
+                if (existingFlight.getString("id").equals(id)) {
+                    return new Response("Ya existe un vuelo con ese ID", Status.BAD_REQUEST);
+                }
+            }
+
             int year = Integer.parseInt(yearStr);
             int month = Integer.parseInt(monthStr);
             int day = Integer.parseInt(dayStr);
             int hour = Integer.parseInt(hourStr);
             int minute = Integer.parseInt(minuteStr);
 
-            LocalDateTime.of(year, month, day, hour, minute);
-        } catch (NumberFormatException | DateTimeException e) {
-            return new Response("Fecha o hora inválida", Status.BAD_REQUEST);
-        }
+            int durationHour = Integer.parseInt(durationHourStr);
+            int durationMinute = Integer.parseInt(durationMinuteStr);
 
-        try {
-            int durHour = Integer.parseInt(durationHourStr);
-            int durMinute = Integer.parseInt(durationMinuteStr);
-            if (durHour < 0 || durMinute < 0) return new Response("Duración inválida", Status.BAD_REQUEST);
+            int scaleHour = scaleDurationHourStr.isEmpty() ? 0 : Integer.parseInt(scaleDurationHourStr);
+            int scaleMinute = scaleDurationMinuteStr.isEmpty() ? 0 : Integer.parseInt(scaleDurationMinuteStr);
 
-            if (scaleDurationHourStr != null && !scaleDurationHourStr.isEmpty() &&
-                scaleDurationMinuteStr != null && !scaleDurationMinuteStr.isEmpty()) {
-                int scaleDurHour = Integer.parseInt(scaleDurationHourStr);
-                int scaleDurMinute = Integer.parseInt(scaleDurationMinuteStr);
-                if (scaleDurHour < 0 || scaleDurMinute < 0) return new Response("Duración de escala inválida", Status.BAD_REQUEST);
+            LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minute);
+
+            LocalDateTime arrivalDate = departureDate
+                    .plusHours(durationHour)
+                    .plusMinutes(durationMinute)
+                    .plusHours(scaleHour)
+                    .plusMinutes(scaleMinute);
+
+            JSONObject newFlight = new JSONObject();
+            newFlight.put("id", id);
+            newFlight.put("plane", planeId);
+            newFlight.put("departureLocation", departureLocationId);
+            newFlight.put("arrivalLocation", arrivalLocationId);
+            newFlight.put("scaleLocation", scaleLocationId == null || scaleLocationId.isBlank() ? JSONObject.NULL : scaleLocationId);
+            newFlight.put("departureDate", departureDate.toString());
+            newFlight.put("arrivalDate", arrivalDate.toString());
+            newFlight.put("hoursDurationArrival", durationHour);
+            newFlight.put("minutesDurationArrival", durationMinute);
+            newFlight.put("hoursDurationScale", scaleHour);
+            newFlight.put("minutesDurationScale", scaleMinute);
+
+            flightsArray.put(newFlight);
+
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(flightsArray.toString(4));
             }
-        } catch (NumberFormatException e) {
-            return new Response("Duración inválida", Status.BAD_REQUEST);
-        }
 
-        return new Response("Validación exitosa", Status.CREATED);
+            return new Response("Vuelo creado correctamente", Status.CREATED);
+
+        } catch (Exception e) {
+            return new Response("Error al procesar el vuelo: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        }
     }
 }
