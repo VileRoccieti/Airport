@@ -1096,6 +1096,11 @@ public class AirportFrame extends javax.swing.JFrame {
 
         DelayID.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         DelayID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID" }));
+        DelayID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DelayIDActionPerformed(evt);
+            }
+        });
 
         jLabel48.setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
         jLabel48.setText("Minutes:");
@@ -1460,6 +1465,28 @@ public class AirportFrame extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(6, true);
         jTabbedPane1.setEnabledAt(7, true);
         jTabbedPane1.setEnabledAt(11, true);
+        userSelect.removeAllItems();
+        userSelect.addItem("Seleccione un usuario");
+
+        File file = new File("json/passengers.json");
+        if (file.exists()) {
+            try (InputStream is = new FileInputStream(file)) {
+                JSONArray array = new JSONArray(new JSONTokener(is));
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    long id = obj.getLong("id");
+                    String firstname = obj.getString("firstname");
+                    String lastname = obj.getString("lastname");
+                    String item = id + " - " + firstname + " " + lastname;
+                    userSelect.addItem(item);
+                }
+            } catch (IOException | JSONException e) {
+                JOptionPane.showMessageDialog(null, "Error leyendo passengers.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró passengers.json", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_userActionPerformed
 
     private void RegisterPassengerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterPassengerButtonActionPerformed
@@ -1866,160 +1893,164 @@ public class AirportFrame extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         try {
-    long passengerId = Long.parseLong(AddFlightID.getText().trim());
-    String flightId = AddFlightFlight.getItemAt(AddFlightFlight.getSelectedIndex());
+            long passengerId = Long.parseLong(AddFlightID.getText().trim());
+            String flightId = AddFlightFlight.getItemAt(AddFlightFlight.getSelectedIndex());
 
-    // Buscar pasajero en archivo JSON
-    File file = new File("json/passengers.json");
-    JSONArray passengersArray;
+            File file = new File("json/passengers.json");
+            JSONArray passengersArray;
 
-    if (!file.exists()) {
-        JOptionPane.showMessageDialog(this, "Archivo passengers.json no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            if (!file.exists()) {
+                JOptionPane.showMessageDialog(this, "Archivo passengers.json no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    try (InputStream is = new FileInputStream(file)) {
-        JSONTokener tokener = new JSONTokener(is);
-        passengersArray = new JSONArray(tokener);
-    }
+            try (InputStream is = new FileInputStream(file)) {
+                JSONTokener tokener = new JSONTokener(is);
+                passengersArray = new JSONArray(tokener);
+            }
 
-    JSONObject selectedPassengerObj = null;
+            JSONObject selectedPassengerObj = null;
 
-    for (int i = 0; i < passengersArray.length(); i++) {
-        JSONObject obj = passengersArray.getJSONObject(i);
-        if (obj.getLong("id") == passengerId) {
-            selectedPassengerObj = obj;
-            break;
+            for (int i = 0; i < passengersArray.length(); i++) {
+                JSONObject obj = passengersArray.getJSONObject(i);
+                if (obj.getLong("id") == passengerId) {
+                    selectedPassengerObj = obj;
+                    break;
+                }
+            }
+
+            if (selectedPassengerObj == null) {
+                JOptionPane.showMessageDialog(this, "Pasajero no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Flight selectedFlight = null;
+            for (Flight f : this.flights) {
+                if (f.getId().equals(flightId)) {
+                    selectedFlight = f;
+                    break;
+                }
+            }
+
+            if (selectedFlight == null) {
+                JOptionPane.showMessageDialog(this, "Vuelo no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Passenger passenger = null;
+            for (Passenger p : this.passengers) {
+                if (p.getId() == passengerId) {
+                    passenger = p;
+                    break;
+                }
+            }
+
+            if (passenger != null) {
+                passenger.addFlight(selectedFlight);
+                selectedFlight.addPassenger(passenger);
+            }
+
+            JSONArray flightsArray;
+            if (selectedPassengerObj.has("flights")) {
+                flightsArray = selectedPassengerObj.getJSONArray("flights");
+            } else {
+                flightsArray = new JSONArray();
+                selectedPassengerObj.put("flights", flightsArray);
+            }
+
+            boolean alreadyAdded = false;
+            for (int i = 0; i < flightsArray.length(); i++) {
+                if (flightsArray.getString(i).equals(flightId)) {
+                    alreadyAdded = true;
+                    break;
+                }
+            }
+
+            if (!alreadyAdded) {
+                flightsArray.put(flightId);
+            }
+
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(passengersArray.toString(4));
+            }
+
+            JOptionPane.showMessageDialog(this, "Vuelo asignado al pasajero correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al asignar vuelo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
 
-    if (selectedPassengerObj == null) {
-        JOptionPane.showMessageDialog(this, "Pasajero no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Buscar vuelo en la lista interna (ya cargada)
-    Flight selectedFlight = null;
-    for (Flight f : this.flights) {
-        if (f.getId().equals(flightId)) {
-            selectedFlight = f;
-            break;
-        }
-    }
-
-    if (selectedFlight == null) {
-        JOptionPane.showMessageDialog(this, "Vuelo no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Agregar vuelo al pasajero (en la instancia en memoria, si existe)
-    Passenger passenger = null;
-    for (Passenger p : this.passengers) {
-        if (p.getId() == passengerId) {
-            passenger = p;
-            break;
-        }
-    }
-
-    if (passenger != null) {
-        passenger.addFlight(selectedFlight);
-        selectedFlight.addPassenger(passenger);
-    }
-
-    // Añadir vuelo al objeto JSON del pasajero
-    JSONArray flightsArray;
-    if (selectedPassengerObj.has("flights")) {
-        flightsArray = selectedPassengerObj.getJSONArray("flights");
-    } else {
-        flightsArray = new JSONArray();
-        selectedPassengerObj.put("flights", flightsArray);
-    }
-
-    if (!flightsArray.toList().contains(flightId)) {
-        flightsArray.put(flightId);
-    }
-
-    // Guardar de nuevo el archivo JSON
-    try (FileWriter writer = new FileWriter(file)) {
-        writer.write(passengersArray.toString(4));
-    }
-
-    JOptionPane.showMessageDialog(this, "Vuelo asignado al pasajero correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-} catch (Exception e) {
-    JOptionPane.showMessageDialog(this, "Error al asignar vuelo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-}
 
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
 
         String flightId = DelayID.getItemAt(DelayID.getSelectedIndex());
-int hours = Integer.parseInt(DelayHours.getItemAt(DelayHours.getSelectedIndex()));
-int minutes = Integer.parseInt(DelayMinutes.getItemAt(DelayMinutes.getSelectedIndex()));
+        int hours = Integer.parseInt(DelayHours.getItemAt(DelayHours.getSelectedIndex()));
+        int minutes = Integer.parseInt(DelayMinutes.getItemAt(DelayMinutes.getSelectedIndex()));
 
-File file = new File("json/flights.json");
-if (!file.exists()) {
-    JOptionPane.showMessageDialog(null, "No se encontró el archivo flights.json", "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-
-JSONArray flightsArray;
-try (InputStream is = new FileInputStream(file)) {
-    flightsArray = new JSONArray(new JSONTokener(is));
-} catch (IOException | JSONException e) {
-    JOptionPane.showMessageDialog(null, "Error leyendo archivo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-
-boolean found = false;
-DateTimeFormatter formatter = null;
-
-for (int i = 0; i < flightsArray.length(); i++) {
-    JSONObject obj = flightsArray.getJSONObject(i);
-    if (flightId.equals(obj.getString("id"))) {
-        String departureDateStr = obj.getString("departureDate");
-
-        LocalDateTime departureDate = null;
-        DateTimeFormatter[] formatters = new DateTimeFormatter[] {
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        };
-
-        for (DateTimeFormatter fmt : formatters) {
-            try {
-                departureDate = LocalDateTime.parse(departureDateStr, fmt);
-                formatter = fmt;
-                break;
-            } catch (DateTimeParseException ignored) {
-            }
-        }
-
-        if (departureDate == null) {
-            JOptionPane.showMessageDialog(null, "Formato de fecha inválido para el vuelo " + flightId, "Error", JOptionPane.ERROR_MESSAGE);
+        File file = new File("json/flights.json");
+        if (!file.exists()) {
+            JOptionPane.showMessageDialog(null, "No se encontró el archivo flights.json", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        departureDate = departureDate.plusHours(hours).plusMinutes(minutes);
-        obj.put("departureDate", departureDate.format(formatter));
-        found = true;
-        break;
-    }
-}
+        JSONArray flightsArray;
+        try (InputStream is = new FileInputStream(file)) {
+            flightsArray = new JSONArray(new JSONTokener(is));
+        } catch (IOException | JSONException e) {
+            JOptionPane.showMessageDialog(null, "Error leyendo archivo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-if (!found) {
-    JOptionPane.showMessageDialog(null, "No se encontró el vuelo con ID " + flightId, "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
+        boolean found = false;
+        DateTimeFormatter formatter = null;
 
-try (FileWriter fw = new FileWriter(file)) {
-    fw.write(flightsArray.toString(4));
-    JOptionPane.showMessageDialog(null, "Vuelo retrasado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-} catch (IOException e) {
-    JOptionPane.showMessageDialog(null, "Error escribiendo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-}
+        for (int i = 0; i < flightsArray.length(); i++) {
+            JSONObject obj = flightsArray.getJSONObject(i);
+            if (flightId.equals(obj.getString("id"))) {
+                String departureDateStr = obj.getString("departureDate");
+
+                LocalDateTime departureDate = null;
+                DateTimeFormatter[] formatters = new DateTimeFormatter[]{
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                };
+
+                for (DateTimeFormatter fmt : formatters) {
+                    try {
+                        departureDate = LocalDateTime.parse(departureDateStr, fmt);
+                        formatter = fmt;
+                        break;
+                    } catch (DateTimeParseException ignored) {
+                    }
+                }
+
+                if (departureDate == null) {
+                    JOptionPane.showMessageDialog(null, "Formato de fecha inválido para el vuelo " + flightId, "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                departureDate = departureDate.plusHours(hours).plusMinutes(minutes);
+                obj.put("departureDate", departureDate.format(formatter));
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(null, "No se encontró el vuelo con ID " + flightId, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(flightsArray.toString(4));
+            JOptionPane.showMessageDialog(null, "Vuelo retrasado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error escribiendo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -2133,99 +2164,99 @@ try (FileWriter fw = new FileWriter(file)) {
 
     private void ShowAllPlanesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowAllPlanesButtonActionPerformed
         try {
-    DefaultTableModel model = (DefaultTableModel) ShowAllPlanesTable.getModel();
-    model.setRowCount(0);
+            DefaultTableModel model = (DefaultTableModel) ShowAllPlanesTable.getModel();
+            model.setRowCount(0);
 
-    File file = new File("json/planes.json");
-    if (!file.exists()) {
-        file.getParentFile().mkdirs(); // crea la carpeta si no existe
-        file.createNewFile();
-        try (FileWriter writer = new FileWriter(file)) {
-            writer.write("[]"); // escribe un array vacío
-        }
-    }
-
-    // Cargar vuelos desde flights.json en un arreglo
-    JSONArray flightsArray = new JSONArray();
-    File flightsFile = new File("json/flights.json");
-    if (flightsFile.exists()) {
-        try (InputStream is = new FileInputStream(flightsFile)) {
-            flightsArray = new JSONArray(new JSONTokener(is));
-        } catch (IOException | JSONException e) {
-            JOptionPane.showMessageDialog(this, "Error leyendo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    // Leer planes y contar sus vuelos
-    try (InputStream is = new FileInputStream(file)) {
-        JSONArray airplanesArray = new JSONArray(new JSONTokener(is));
-
-        for (int i = 0; i < airplanesArray.length(); i++) {
-            JSONObject obj = airplanesArray.getJSONObject(i);
-
-            String id = obj.getString("id");
-            String brand = obj.getString("brand");
-            String modelText = obj.getString("model");
-            int maxCapacity = obj.getInt("maxCapacity");
-            String airline = obj.getString("airline");
-
-            // Contar vuelos para este avión
-            int numFlights = 0;
-            for (int j = 0; j < flightsArray.length(); j++) {
-                JSONObject flight = flightsArray.getJSONObject(j);
-                if (flight.has("planeId")) {
-                    String planeId = flight.getString("planeId");
-                    if (planeId.equals(id)) {
-                        numFlights++;
-                    }
+            File file = new File("json/planes.json");
+            if (!file.exists()) {
+                file.getParentFile().mkdirs(); // crea la carpeta si no existe
+                file.createNewFile();
+                try (FileWriter writer = new FileWriter(file)) {
+                    writer.write("[]"); // escribe un array vacío
                 }
             }
 
-            model.addRow(new Object[]{
-                id, brand, modelText, String.valueOf(maxCapacity), airline, String.valueOf(numFlights)
-            });
-        }
-    }
+            // Cargar vuelos desde flights.json en un arreglo
+            JSONArray flightsArray = new JSONArray();
+            File flightsFile = new File("json/flights.json");
+            if (flightsFile.exists()) {
+                try (InputStream is = new FileInputStream(flightsFile)) {
+                    flightsArray = new JSONArray(new JSONTokener(is));
+                } catch (IOException | JSONException e) {
+                    JOptionPane.showMessageDialog(this, "Error leyendo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
-} catch (IOException e) {
-    JOptionPane.showMessageDialog(this, "Error al leer planes.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-} catch (JSONException e) {
-    JOptionPane.showMessageDialog(this, "Error al procesar el JSON: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-}
+            // Leer planes y contar sus vuelos
+            try (InputStream is = new FileInputStream(file)) {
+                JSONArray airplanesArray = new JSONArray(new JSONTokener(is));
+
+                for (int i = 0; i < airplanesArray.length(); i++) {
+                    JSONObject obj = airplanesArray.getJSONObject(i);
+
+                    String id = obj.getString("id");
+                    String brand = obj.getString("brand");
+                    String modelText = obj.getString("model");
+                    int maxCapacity = obj.getInt("maxCapacity");
+                    String airline = obj.getString("airline");
+
+                    // Contar vuelos para este avión
+                    int numFlights = 0;
+                    for (int j = 0; j < flightsArray.length(); j++) {
+                        JSONObject flight = flightsArray.getJSONObject(j);
+                        if (flight.has("planeId")) {
+                            String planeId = flight.getString("planeId");
+                            if (planeId.equals(id)) {
+                                numFlights++;
+                            }
+                        }
+                    }
+
+                    model.addRow(new Object[]{
+                        id, brand, modelText, String.valueOf(maxCapacity), airline, String.valueOf(numFlights)
+                    });
+                }
+            }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al leer planes.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (JSONException e) {
+            JOptionPane.showMessageDialog(this, "Error al procesar el JSON: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_ShowAllPlanesButtonActionPerformed
 
     private void ShowAllLocationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowAllLocationsButtonActionPerformed
         DefaultTableModel model = (DefaultTableModel) ShowAllLocationsTable.getModel();
-model.setRowCount(0);
-this.locations.clear();
+        model.setRowCount(0);
+        this.locations.clear();
 
-File file = new File("json/locations.json");
-if (!file.exists()) {
-    JOptionPane.showMessageDialog(this, "No se encontró el archivo locations.json", "Archivo no encontrado", JOptionPane.WARNING_MESSAGE);
-    return;
-}
+        File file = new File("json/locations.json");
+        if (!file.exists()) {
+            JOptionPane.showMessageDialog(this, "No se encontró el archivo locations.json", "Archivo no encontrado", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-try (InputStream is = new FileInputStream(file)) {
-    JSONArray locationsArray = new JSONArray(new JSONTokener(is));
-    for (int i = 0; i < locationsArray.length(); i++) {
-        JSONObject obj = locationsArray.getJSONObject(i);
+        try (InputStream is = new FileInputStream(file)) {
+            JSONArray locationsArray = new JSONArray(new JSONTokener(is));
+            for (int i = 0; i < locationsArray.length(); i++) {
+                JSONObject obj = locationsArray.getJSONObject(i);
 
-        String id = obj.getString("airportId");
-        String name = obj.getString("airportName");
-        String city = obj.getString("airportCity");
-        String country = obj.getString("airportCountry");
-        double latitude = obj.getDouble("airportLatitude");
-        double longitude = obj.getDouble("airportLongitude");
+                String id = obj.getString("airportId");
+                String name = obj.getString("airportName");
+                String city = obj.getString("airportCity");
+                String country = obj.getString("airportCountry");
+                double latitude = obj.getDouble("airportLatitude");
+                double longitude = obj.getDouble("airportLongitude");
 
-        Location location = new Location(id, name, city, country, latitude, longitude);
-        this.locations.add(location);
+                Location location = new Location(id, name, city, country, latitude, longitude);
+                this.locations.add(location);
 
-        model.addRow(new Object[]{id, name, city, country});
-    }
-} catch (IOException | JSONException e) {
-    JOptionPane.showMessageDialog(this, "Error al leer locations.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-}
+                model.addRow(new Object[]{id, name, city, country});
+            }
+        } catch (IOException | JSONException e) {
+            JOptionPane.showMessageDialog(this, "Error al leer locations.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_ShowAllLocationsButtonActionPerformed
 
@@ -2235,8 +2266,14 @@ try (InputStream is = new FileInputStream(file)) {
 
     private void userSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userSelectActionPerformed
         try {
-            String id = userSelect.getSelectedItem().toString();
-            if (!id.equals(userSelect.getItemAt(0))) {
+            Object selectedObj = userSelect.getSelectedItem();
+            if (selectedObj == null) {
+                return;
+            }
+
+            String selected = selectedObj.toString();
+            if (!selected.equals("Seleccione un usuario")) {
+                String id = selected.split(" - ")[0].trim(); // Extraer ID
                 UpdateInfoID.setText(id);
                 AddFlightID.setText(id);
             } else {
@@ -2244,12 +2281,18 @@ try (InputStream is = new FileInputStream(file)) {
                 AddFlightID.setText("");
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error procesando selección de usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_userSelectActionPerformed
 
     private void FlightRegistrationPlaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FlightRegistrationPlaneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FlightRegistrationPlaneActionPerformed
+
+    private void DelayIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DelayIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DelayIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2272,59 +2315,58 @@ try (InputStream is = new FileInputStream(file)) {
 
     public void loadData() {
         FlightRegistrationPlane.removeAllItems();
-FlightRegistrationLocation.removeAllItems();
-FlightRegistrationArrivalLocation.removeAllItems();
-FlightRegistrationScaleLocation.removeAllItems();
+        FlightRegistrationLocation.removeAllItems();
+        FlightRegistrationArrivalLocation.removeAllItems();
+        FlightRegistrationScaleLocation.removeAllItems();
 
 // Cargar aviones desde planes.json
-File planesFile = new File("json/planes.json");
-if (planesFile.exists()) {
-    try (InputStream is = new FileInputStream(planesFile)) {
-        JSONArray airplanesArray = new JSONArray(new JSONTokener(is));
-        for (int i = 0; i < airplanesArray.length(); i++) {
-            JSONObject obj = airplanesArray.getJSONObject(i);
-            if (obj.has("id")) {
-                String id = obj.getString("id");
-                FlightRegistrationPlane.addItem(id);
+        File planesFile = new File("json/planes.json");
+        if (planesFile.exists()) {
+            try (InputStream is = new FileInputStream(planesFile)) {
+                JSONArray airplanesArray = new JSONArray(new JSONTokener(is));
+                for (int i = 0; i < airplanesArray.length(); i++) {
+                    JSONObject obj = airplanesArray.getJSONObject(i);
+                    if (obj.has("id")) {
+                        String id = obj.getString("id");
+                        FlightRegistrationPlane.addItem(id);
+                    }
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
             }
         }
-    } catch (IOException | JSONException e) {
-        e.printStackTrace();
-    }
-}
 
 // Cargar ubicaciones desde locations.json
-File locationsFile = new File("json/locations.json");
-if (locationsFile.exists()) {
-    try (InputStream is = new FileInputStream(locationsFile)) {
-        JSONArray locationsArray = new JSONArray(new JSONTokener(is));
-        for (int i = 0; i < locationsArray.length(); i++) {
-            JSONObject obj = locationsArray.getJSONObject(i);
+        File locationsFile = new File("json/locations.json");
+        if (locationsFile.exists()) {
+            try (InputStream is = new FileInputStream(locationsFile)) {
+                JSONArray locationsArray = new JSONArray(new JSONTokener(is));
+                for (int i = 0; i < locationsArray.length(); i++) {
+                    JSONObject obj = locationsArray.getJSONObject(i);
 
-            if (!obj.has("id") || !obj.has("latitude") || !obj.has("longitude")) {
-                continue;
+                    if (!obj.has("airportId") || !obj.has("airportLatitude") || !obj.has("airportLongitude")) {
+                        continue;
+                    }
+
+                    String id = obj.getString("airportId");
+                    double lat, lon;
+
+                    try {
+                        lat = Double.parseDouble(obj.get("airportLatitude").toString().replace(',', '.'));
+                        lon = Double.parseDouble(obj.get("airportLongitude").toString().replace(',', '.'));
+                    } catch (NumberFormatException e) {
+                        continue;
+                    }
+
+                    // Agregar ID a los combos de locations
+                    FlightRegistrationLocation.addItem(id);
+                    FlightRegistrationArrivalLocation.addItem(id);
+                    FlightRegistrationScaleLocation.addItem(id);
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
             }
-
-            String id = obj.getString("id");
-            double lat, lon;
-
-            try {
-                lat = Double.parseDouble(obj.get("latitude").toString().replace(',', '.'));
-                lon = Double.parseDouble(obj.get("longitude").toString().replace(',', '.'));
-            } catch (NumberFormatException e) {
-                continue;
-            }
-
-            // Agregar ID a los combos de locations
-            FlightRegistrationLocation.addItem(id);
-            FlightRegistrationArrivalLocation.addItem(id);
-            FlightRegistrationScaleLocation.addItem(id);
         }
-    } catch (IOException | JSONException e) {
-        e.printStackTrace();
-    }
-}
-
 
         DelayID.removeAllItems(); // Limpiar primero
 
@@ -2348,26 +2390,51 @@ if (locationsFile.exists()) {
         } catch (JSONException e) {
             JOptionPane.showMessageDialog(null, "Error al procesar el JSON: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         AddFlightFlight.removeAllItems(); // Limpiar primero
 
-    try (InputStream is = new FileInputStream(file)) {
-        JSONArray flightsArray = new JSONArray(new JSONTokener(is));
+        try (InputStream is = new FileInputStream(file)) {
+            JSONArray flightsArray = new JSONArray(new JSONTokener(is));
 
-        for (int i = 0; i < flightsArray.length(); i++) {
-            JSONObject obj = flightsArray.getJSONObject(i);
-            if (obj.has("id")) {
-                String id = obj.getString("id");
-                AddFlightFlight.addItem(id);
+            for (int i = 0; i < flightsArray.length(); i++) {
+                JSONObject obj = flightsArray.getJSONObject(i);
+                if (obj.has("id")) {
+                    String id = obj.getString("id");
+                    AddFlightFlight.addItem(id);
+                }
             }
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error leyendo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (JSONException e) {
+            JOptionPane.showMessageDialog(null, "Error al procesar el JSON: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Error leyendo flights.json: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (JSONException e) {
-        JOptionPane.showMessageDialog(null, "Error al procesar el JSON: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
+//    FlightRegistrationLocation.removeAllItems(); // Limpiar primero
+//
+//if (!file.exists()) {
+//    JOptionPane.showMessageDialog(null, "No se encontró el archivo locations.json", "Error", JOptionPane.ERROR_MESSAGE);
+//    return;
+//}
+//
+//try (InputStream is = new FileInputStream(file)) {
+//    JSONArray locationsArray = new JSONArray(new JSONTokener(is));
+//    System.out.println("Cantidad de ubicaciones encontradas: " + locationsArray.length());
+//
+//    for (int i = 0; i < locationsArray.length(); i++) {
+//        JSONObject obj = locationsArray.getJSONObject(i);
+//        if (obj.has("airportId")) {
+//            String id = obj.getString("airportId");
+//            System.out.println("Agregando airportId al ComboBox: " + id);
+//            FlightRegistrationLocation.addItem(id);
+//        } else {
+//            System.out.println("El objeto en índice " + i + " no tiene 'airportId'");
+//        }
+//    }
+//
+//} catch (IOException | JSONException e) {
+//    JOptionPane.showMessageDialog(null, "Error al leer o procesar el JSON: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
