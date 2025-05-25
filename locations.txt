@@ -1,5 +1,0 @@
-Mateo, Hijueputa, No Hiciste, Una verga, 90.0, 0.0
-001, SanMartin, Medellin, COL, 90,000000, 80,000000
-001, SanMartin, Medellin, COL, 90.0, 80.0
-asd, asd, asd, asd, 90,000000, 90,000000
-asd, asd, asd, asd, 90.0, 90.0
