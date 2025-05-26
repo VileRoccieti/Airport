@@ -4,10 +4,10 @@
         "minutesDurationScale": 0,
         "departureLocation": "JFK",
         "scaleLocation": null,
-        "registeredPassengers": "158484546,28171784",
+        "registeredPassengers": "158484546,28171784,314747359",
         "minutesDurationArrival": 15,
         "id": "FLY001",
-        "departureDate": "2025-06-01T17:32:00",
+        "departureDate": "2025-06-01T22:35:00",
         "hoursDurationScale": 0,
         "arrivalLocation": "LHR",
         "hoursDurationArrival": 7
@@ -170,5 +170,18 @@
         "arrivalLocation": "SYD",
         "hoursDurationArrival": 11,
         "arrivalDate": "0012-02-24T17:46"
+    },
+    {
+        "plane": "KL33445",
+        "minutesDurationScale": 27,
+        "departureLocation": "JFK",
+        "scaleLocation": "JFK",
+        "minutesDurationArrival": 13,
+        "id": "999991",
+        "departureDate": "2025-05-07T07:12",
+        "hoursDurationScale": 20,
+        "arrivalLocation": "HND",
+        "hoursDurationArrival": 8,
+        "arrivalDate": "2025-05-08T11:52"
     }
 ]

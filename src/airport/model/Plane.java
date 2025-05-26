@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport;
+package airport.model;
 
 import java.util.ArrayList;
 
@@ -60,4 +60,19 @@ public class Plane {
         return flights.size();
     }
     
+    public String getManufacturer() {
+        return brand;
+    }
+
+    public int getCapacity() {
+        return maxCapacity;
+    }
+    public Plane(String id) {
+    this.id = id;
+    this.brand = "UNKNOWN";
+    this.model = "UNKNOWN";
+    this.maxCapacity = 0;
+    this.airline = "UNKNOWN";
+    this.flights = new ArrayList<>();
+}
 }

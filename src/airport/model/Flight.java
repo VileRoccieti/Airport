@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package airport;
+package airport.model;
 
+import airport.model.Plane;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -114,5 +115,15 @@ public class Flight {
     public int getNumPassengers() {
         return passengers.size();
     }
-    
+    public int getFlightDurationMinutes() {
+    return hoursDurationArrival * 60 + minutesDurationArrival;
+    }
+
+    public int getStopDurationMinutes() {
+        return hoursDurationScale * 60 + minutesDurationScale;
+    }
+    public Location getStopLocation() {
+    return scaleLocation;
+    }   
+
 }

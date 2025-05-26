@@ -6,9 +6,14 @@ package airport.controller;
 
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import airport.validators.AddToFlightValidator;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -18,6 +23,72 @@ import org.json.JSONTokener;
  * @author plobb
  */
 public class AddToFlightController {
+
+    public static Response addPassengerToFlight(String passengerIdStr, String flightId) {
+        // Validar parámetros
+        Response validation = AddToFlightValidator.validate(passengerIdStr, flightId);
+        if (validation.getStatus() != Status.OK) {
+            return validation;
+        }
+
+        // Verificar si existe el pasajero
+        Response verifyPassengerResponse = verifyPassengerExists(passengerIdStr);
+        if (verifyPassengerResponse.getStatus() != Status.OK) {
+            return verifyPassengerResponse;
+        }
+
+        // Acceso y modificación del archivo flights.json
+        File file = new File("json/flights.json");
+        if (!file.exists()) {
+            return new Response("Archivo flights.json no encontrado.", Status.INTERNAL_SERVER_ERROR);
+        }
+
+        try (InputStream is = new FileInputStream(file)) {
+            JSONTokener tokener = new JSONTokener(is);
+            JSONArray flightsArray = new JSONArray(tokener);
+
+            boolean flightFound = false;
+
+            for (int i = 0; i < flightsArray.length(); i++) {
+                JSONObject flight = flightsArray.getJSONObject(i);
+
+                if (flight.getString("id").equals(flightId)) {
+                    flightFound = true;
+                    String newPassengerId = passengerIdStr.trim();
+
+                    if (!flight.has("registeredPassengers") || flight.getString("registeredPassengers").isEmpty()) {
+                        flight.put("registeredPassengers", newPassengerId);
+                    } else {
+                        String existing = flight.getString("registeredPassengers");
+                        List<String> ids = new ArrayList<>(Arrays.asList(existing.split(",")));
+
+                        if (ids.contains(newPassengerId)) {
+                            return new Response("El pasajero ya está registrado en este vuelo.", Status.BAD_REQUEST);
+                        }
+
+                        ids.add(newPassengerId);
+                        flight.put("registeredPassengers", String.join(",", ids));
+                    }
+
+                    try (FileWriter writer = new FileWriter(file)) {
+                        writer.write(flightsArray.toString(4));
+                    }
+
+                    return new Response("Pasajero agregado correctamente al vuelo.", Status.OK);
+                }
+            }
+
+            if (!flightFound) {
+                return new Response("Vuelo no encontrado.", Status.NOT_FOUND);
+            }
+
+        } catch (Exception e) {
+            return new Response("Error al procesar el archivo flights.json: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+        }
+
+        return new Response("Error desconocido.", Status.INTERNAL_SERVER_ERROR);
+    }
+
     public static Response verifyPassengerExists(String idStr) {
         if (idStr == null || idStr.trim().isEmpty()) {
             return new Response("El ID está vacío", Status.BAD_REQUEST);

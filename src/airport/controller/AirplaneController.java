@@ -4,8 +4,11 @@
  */
 package airport.controller;
 
+import airport.model.Plane;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import interfaces.IPlaneRepository;
+import interfaces.IValidator;
 
 /**
  *
@@ -13,37 +16,32 @@ import airport.controller.utils.Status;
  */
 public class AirplaneController {
 
-    public static Response createAirplane(String id, String brand, String model, String maxCapacityStr, String airline) {
-        if (id == null || id.trim().isEmpty()) {
-            return new Response("Falta el ID del avión", Status.BAD_REQUEST);
-        }
+    private final IValidator<Plane> validator;
+    private final IPlaneRepository repository;
 
-        if (brand == null || brand.trim().isEmpty()) {
-            return new Response("Falta la marca del avión", Status.BAD_REQUEST);
-        }
+    public AirplaneController(IValidator<Plane> validator, IPlaneRepository repository) {
+        this.validator = validator;
+        this.repository = repository;
+    }
 
-        if (model == null || model.trim().isEmpty()) {
-            return new Response("Falta el modelo del avión", Status.BAD_REQUEST);
-        }
-
-        if (maxCapacityStr == null || maxCapacityStr.trim().isEmpty()) {
-            return new Response("Falta la capacidad máxima", Status.BAD_REQUEST);
-        }
-
-        if (airline == null || airline.trim().isEmpty()) {
-            return new Response("Falta la aerolínea", Status.BAD_REQUEST);
-        }
-
-        int maxCapacity;
+    public Response createAirplane(String id, String brand, String model, String maxCapacityStr, String airline) {
+        Plane plane;
         try {
-            maxCapacity = Integer.parseInt(maxCapacityStr.trim());
-            if (maxCapacity <= 0) {
-                return new Response("La capacidad máxima debe ser un número positivo", Status.BAD_REQUEST);
-            }
-        } catch (NumberFormatException e) {
-            return new Response("La capacidad máxima debe ser un número válido", Status.BAD_REQUEST);
+            int maxCapacity = Integer.parseInt(maxCapacityStr.trim());
+            plane = new Plane(id.trim(), brand.trim(), model.trim(), maxCapacity, airline.trim());
+        } catch (Exception e) {
+            return Response.error("Error al procesar los datos: " + e.getMessage());
         }
 
-        return new Response("Avión creado exitosamente", Status.CREATED);
+        Response validation = validator.validate(plane);
+        if (!validation.isSuccess()) return validation;
+
+        try {
+            repository.save(plane);
+        } catch (Exception e) {
+            return Response.error("Error al guardar el avión: " + e.getMessage());
+        }
+
+        return new Response("Avión creado exitosamente", Status.CREATED, plane);
     }
 }
