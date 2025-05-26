@@ -4,9 +4,10 @@
  */
 package airport.controller;
 
-import airport.Plane;
+import airport.model.Plane;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import airport.validators.PlaneValidator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -27,24 +28,17 @@ public class AirplaneController {
     private static final String FILE_PATH = "json/planes.json";
 
     public static Response createAirplane(String id, String brand, String model, String maxCapacityStr, String airline) {
-        if (id == null || id.trim().isEmpty()) {
-            return new Response("Falta el ID del avión", Status.BAD_REQUEST);
+        Plane plane;
+        try {
+            int maxCapacity = Integer.parseInt(maxCapacityStr.trim());
+            plane = new Plane(id, brand, model, maxCapacity, airline);
+        } catch (Exception e) {
+            return new Response("Capacidad inválida: " + e.getMessage(), Status.BAD_REQUEST);
         }
 
-        if (brand == null || brand.trim().isEmpty()) {
-            return new Response("Falta la marca del avión", Status.BAD_REQUEST);
-        }
-
-        if (model == null || model.trim().isEmpty()) {
-            return new Response("Falta el modelo del avión", Status.BAD_REQUEST);
-        }
-
-        if (maxCapacityStr == null || maxCapacityStr.trim().isEmpty()) {
-            return new Response("Falta la capacidad máxima", Status.BAD_REQUEST);
-        }
-
-        if (airline == null || airline.trim().isEmpty()) {
-            return new Response("Falta la aerolínea", Status.BAD_REQUEST);
+        Response validation = PlaneValidator.validate(plane);
+        if (validation.getStatus() != Status.OK) {
+            return validation;
         }
 
         int maxCapacity;

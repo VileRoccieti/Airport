@@ -4,9 +4,10 @@
  */
 package airport.controller;
 
-import airport.Passenger;
+import airport.model.Passenger;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import airport.validators.PassengerValidator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -40,32 +41,26 @@ public class PassengerController {
             String phoneStr,
             String country) {
 
-        if (idStr == null || idStr.trim().isEmpty()) {
-            return new Response("Falta el ID", Status.BAD_REQUEST);
+        Passenger passenger;
+        try {
+            long id = Long.parseLong(idStr.trim());
+            int year = Integer.parseInt(yearStr.trim());
+            int month = Integer.parseInt(monthStr.trim());
+            int day = Integer.parseInt(dayStr.trim());
+            LocalDate birthDate = LocalDate.of(year, month, day);
+            int phoneCode = Integer.parseInt(phoneCodeStr.trim());
+            long phone = Long.parseLong(phoneStr.trim());
+
+            passenger = new Passenger(id, firstName, lastName, birthDate, phoneCode, phone, country);
+
+        } catch (Exception e) {
+            return new Response("Datos inválidos: " + e.getMessage(), Status.BAD_REQUEST);
         }
-        if (firstName == null || firstName.trim().isEmpty()) {
-            return new Response("Falta el nombre", Status.BAD_REQUEST);
-        }
-        if (lastName == null || lastName.trim().isEmpty()) {
-            return new Response("Falta el apellido", Status.BAD_REQUEST);
-        }
-        if (yearStr == null || yearStr.trim().isEmpty()) {
-            return new Response("Falta el año", Status.BAD_REQUEST);
-        }
-        if (monthStr == null || monthStr.trim().isEmpty()) {
-            return new Response("Falta el mes", Status.BAD_REQUEST);
-        }
-        if (dayStr == null || dayStr.trim().isEmpty()) {
-            return new Response("Falta el día", Status.BAD_REQUEST);
-        }
-        if (phoneCodeStr == null || phoneCodeStr.trim().isEmpty()) {
-            return new Response("Falta el indicativo telefónico", Status.BAD_REQUEST);
-        }
-        if (phoneStr == null || phoneStr.trim().isEmpty()) {
-            return new Response("Falta el teléfono", Status.BAD_REQUEST);
-        }
-        if (country == null || country.trim().isEmpty()) {
-            return new Response("Falta el país", Status.BAD_REQUEST);
+
+// VALIDAR
+        Response validation = PassengerValidator.validate(passenger);
+        if (validation.getStatus() != Status.OK) {
+            return validation;
         }
 
         long id;
@@ -102,7 +97,6 @@ public class PassengerController {
             return new Response("Edad inválida calculada", Status.BAD_REQUEST);
         }
 
-        Passenger passenger = new Passenger(id, firstName, lastName, birthDate, phoneCode, phone, country);
 
         try {
             savePassengerToFile(passenger);

@@ -24,6 +24,18 @@ public class Response {
         this.object = object;
     }
 
+    public static Response ok(String message) {
+        return new Response(message, Status.OK);
+    }
+
+    public static Response ok(String message, Object object) {
+        return new Response(message, Status.OK, object);
+    }
+
+    public static Response error(String message) {
+        return new Response(message, Status.BAD_REQUEST);
+    }
+
     public String getMessage() {
         return message;
     }

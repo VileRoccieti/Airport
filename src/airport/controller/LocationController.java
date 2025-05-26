@@ -4,9 +4,10 @@
  */
 package airport.controller;
 
-import airport.Location;
+import airport.model.Location;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import airport.validators.LocationValidator;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,15 +17,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
  * @author plobb
  */
 public class LocationController {
+
     private static final String DIRECTORY = System.getProperty("user.dir") + File.separator + "json";
     private static final String FILE_PATH = DIRECTORY + File.separator + "locations.json";
-
     private static final List<Location> locations = new ArrayList<>();
 
     public static Response createLocation(String id, String name, String city, String country, String latitudeStr, String longitudeStr) {
@@ -34,39 +37,25 @@ public class LocationController {
             return new Response("Error cargando ubicaciones previas: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
         }
 
-        if (id == null || id.trim().isEmpty()) {
-            return new Response("ID del aeropuerto no puede estar vacío.", Status.BAD_REQUEST);
-        }
-        if (name == null || name.trim().isEmpty()) {
-            return new Response("Nombre del aeropuerto no puede estar vacío.", Status.BAD_REQUEST);
-        }
-        if (city == null || city.trim().isEmpty()) {
-            return new Response("Ciudad no puede estar vacía.", Status.BAD_REQUEST);
-        }
-        if (country == null || country.trim().isEmpty()) {
-            return new Response("País no puede estar vacío.", Status.BAD_REQUEST);
-        }
-
         double latitude, longitude;
         try {
-            latitude = Double.parseDouble(latitudeStr);
-            longitude = Double.parseDouble(longitudeStr);
+            latitude = Double.parseDouble(latitudeStr.trim());
+            longitude = Double.parseDouble(longitudeStr.trim());
         } catch (NumberFormatException e) {
-            return new Response("Latitud o longitud inválida.", Status.BAD_REQUEST);
+            return new Response("Latitud o longitud inválidas: " + e.getMessage(), Status.BAD_REQUEST);
         }
 
-        if (latitude < -90 || latitude > 90) {
-            return new Response("Latitud fuera de rango (-90 a 90).", Status.BAD_REQUEST);
-        }
-        if (longitude < -180 || longitude > 180) {
-            return new Response("Longitud fuera de rango (-180 a 180).", Status.BAD_REQUEST);
+        Location location = new Location(id, name, city, country, latitude, longitude);
+
+        Response validation = LocationValidator.validate(location);
+        if (validation.getStatus() != Status.OK) {
+            return validation;
         }
 
         if (existsLocationId(id)) {
             return new Response("Ya existe una ubicación con ese ID.", Status.BAD_REQUEST);
         }
 
-        Location location = new Location(id, name, city, country, latitude, longitude);
         locations.add(location);
 
         try {
@@ -84,14 +73,10 @@ public class LocationController {
 
     public static void loadLocationsFromFile() throws IOException {
         File dir = new File(DIRECTORY);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
+        if (!dir.exists()) dir.mkdirs();
 
         File file = new File(FILE_PATH);
-        if (!file.exists()) {
-            return;
-        }
+        if (!file.exists()) return;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder jsonBuilder = new StringBuilder();
@@ -99,15 +84,15 @@ public class LocationController {
             while ((line = reader.readLine()) != null) {
                 jsonBuilder.append(line);
             }
-            String json = jsonBuilder.toString().trim();
-            if (json.isEmpty() || json.equals("[]")) {
-                return;
-            }
 
-            org.json.JSONArray jsonArray = new org.json.JSONArray(json);
+            String json = jsonBuilder.toString().trim();
+            if (json.isEmpty() || json.equals("[]")) return;
+
+            JSONArray jsonArray = new JSONArray(json);
             locations.clear();
+
             for (int i = 0; i < jsonArray.length(); i++) {
-                org.json.JSONObject obj = jsonArray.getJSONObject(i);
+                JSONObject obj = jsonArray.getJSONObject(i);
                 Location loc = new Location(
                         obj.getString("airportId"),
                         obj.getString("airportName"),
@@ -123,13 +108,11 @@ public class LocationController {
 
     private static void saveLocationsToFile() throws IOException {
         File dir = new File(DIRECTORY);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
+        if (!dir.exists()) dir.mkdirs();
 
-        org.json.JSONArray jsonArray = new org.json.JSONArray();
+        JSONArray jsonArray = new JSONArray();
         for (Location loc : locations) {
-            org.json.JSONObject obj = new org.json.JSONObject();
+            JSONObject obj = new JSONObject();
             obj.put("airportId", loc.getAirportId());
             obj.put("airportName", loc.getAirportName());
             obj.put("airportCity", loc.getAirportCity());

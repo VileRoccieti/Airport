@@ -6,6 +6,7 @@ package airport.controller;
 
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import airport.validators.AddToFlightValidator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -24,22 +25,19 @@ import org.json.JSONTokener;
 public class AddToFlightController {
 
     public static Response addPassengerToFlight(String passengerIdStr, String flightId) {
-        if (passengerIdStr == null || passengerIdStr.trim().isEmpty()) {
-            return new Response("El ID está vacío", Status.BAD_REQUEST);
+        // Validar parámetros
+        Response validation = AddToFlightValidator.validate(passengerIdStr, flightId);
+        if (validation.getStatus() != Status.OK) {
+            return validation;
         }
 
-        long passengerId;
-        try {
-            passengerId = Long.parseLong(passengerIdStr.trim());
-        } catch (NumberFormatException e) {
-            return new Response("El ID debe ser numérico", Status.BAD_REQUEST);
-        }
-
+        // Verificar si existe el pasajero
         Response verifyPassengerResponse = verifyPassengerExists(passengerIdStr);
         if (verifyPassengerResponse.getStatus() != Status.OK) {
             return verifyPassengerResponse;
         }
 
+        // Acceso y modificación del archivo flights.json
         File file = new File("json/flights.json");
         if (!file.exists()) {
             return new Response("Archivo flights.json no encontrado.", Status.INTERNAL_SERVER_ERROR);
@@ -56,18 +54,19 @@ public class AddToFlightController {
 
                 if (flight.getString("id").equals(flightId)) {
                     flightFound = true;
+                    String newPassengerId = passengerIdStr.trim();
 
                     if (!flight.has("registeredPassengers") || flight.getString("registeredPassengers").isEmpty()) {
-                        flight.put("registeredPassengers", String.valueOf(passengerId));
+                        flight.put("registeredPassengers", newPassengerId);
                     } else {
                         String existing = flight.getString("registeredPassengers");
                         List<String> ids = new ArrayList<>(Arrays.asList(existing.split(",")));
 
-                        if (ids.contains(String.valueOf(passengerId))) {
+                        if (ids.contains(newPassengerId)) {
                             return new Response("El pasajero ya está registrado en este vuelo.", Status.BAD_REQUEST);
                         }
 
-                        ids.add(String.valueOf(passengerId));
+                        ids.add(newPassengerId);
                         flight.put("registeredPassengers", String.join(",", ids));
                     }
 

@@ -102,5 +102,13 @@
         "airportLatitude": 90,
         "airportId": "XKU",
         "airportLongitude": 9
+    },
+    {
+        "airportName": "Linate",
+        "airportCountry": "ITA",
+        "airportCity": "Milan",
+        "airportLatitude": -90,
+        "airportId": "LIN",
+        "airportLongitude": 180
     }
 ]

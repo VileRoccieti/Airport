@@ -4,11 +4,12 @@
  */
 package airport.controller;
 
-import airport.Flight;
-import airport.Location;
-import airport.Plane;
+import airport.model.Flight;
+import airport.model.Location;
+import airport.model.Plane;
 import airport.controller.utils.Response;
 import airport.controller.utils.Status;
+import airport.validators.FlightValidator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -42,17 +43,38 @@ public class FlightsController {
             String scaleDurationHourStr,
             String scaleDurationMinuteStr
     ) {
-        if (id.isBlank() || planeId.isBlank() || departureLocationId.isBlank() || arrivalLocationId.isBlank()
-                || yearStr.isBlank() || monthStr.isBlank() || dayStr.isBlank()
-                || hourStr.isBlank() || minuteStr.isBlank()
-                || durationHourStr.isBlank() || durationMinuteStr.isBlank()) {
-            return new Response("Todos los campos obligatorios deben estar completos", Status.BAD_REQUEST);
-        }
-
-        File file = new File("json/flights.json");
-        JSONArray flightsArray;
-
         try {
+            int year = Integer.parseInt(yearStr);
+            int month = Integer.parseInt(monthStr);
+            int day = Integer.parseInt(dayStr);
+            int hour = Integer.parseInt(hourStr);
+            int minute = Integer.parseInt(minuteStr);
+            int durationHour = Integer.parseInt(durationHourStr);
+            int durationMinute = Integer.parseInt(durationMinuteStr);
+            int scaleHour = scaleDurationHourStr.isBlank() ? 0 : Integer.parseInt(scaleDurationHourStr);
+            int scaleMinute = scaleDurationMinuteStr.isBlank() ? 0 : Integer.parseInt(scaleDurationMinuteStr);
+
+            LocalDateTime departure = LocalDateTime.of(year, month, day, hour, minute);
+
+            Plane plane = new Plane(planeId, "", "", 100, "");
+            Location dep = new Location(departureLocationId, "", "", "", 0, 0);
+            Location arr = new Location(arrivalLocationId, "", "", "", 0, 0);
+            Location scale = (scaleLocationId == null || scaleLocationId.isBlank())
+                    ? null
+                    : new Location(scaleLocationId, "", "", "", 0, 0);
+
+            Flight flight = (scale == null)
+                    ? new Flight(id, plane, dep, arr, departure, durationHour, durationMinute)
+                    : new Flight(id, plane, dep, scale, arr, departure, durationHour, durationMinute, scaleHour, scaleMinute);
+
+            Response validation = FlightValidator.validate(flight);
+            if (validation.getStatus() != Status.OK) {
+                return validation;
+            }
+
+            File file = new File("json/flights.json");
+            JSONArray flightsArray;
+
             if (file.exists()) {
                 try (InputStream is = new FileInputStream(file)) {
                     flightsArray = new JSONArray(new JSONTokener(is));
@@ -70,38 +92,18 @@ public class FlightsController {
                 }
             }
 
-            int year = Integer.parseInt(yearStr);
-            int month = Integer.parseInt(monthStr);
-            int day = Integer.parseInt(dayStr);
-            int hour = Integer.parseInt(hourStr);
-            int minute = Integer.parseInt(minuteStr);
-
-            int durationHour = Integer.parseInt(durationHourStr);
-            int durationMinute = Integer.parseInt(durationMinuteStr);
-
-            int scaleHour = scaleDurationHourStr.isEmpty() ? 0 : Integer.parseInt(scaleDurationHourStr);
-            int scaleMinute = scaleDurationMinuteStr.isEmpty() ? 0 : Integer.parseInt(scaleDurationMinuteStr);
-
-            LocalDateTime departureDate = LocalDateTime.of(year, month, day, hour, minute);
-
-            LocalDateTime arrivalDate = departureDate
-                    .plusHours(durationHour)
-                    .plusMinutes(durationMinute)
-                    .plusHours(scaleHour)
-                    .plusMinutes(scaleMinute);
-
             JSONObject newFlight = new JSONObject();
-            newFlight.put("id", id);
+            newFlight.put("id", flight.getId());
             newFlight.put("plane", planeId);
             newFlight.put("departureLocation", departureLocationId);
             newFlight.put("arrivalLocation", arrivalLocationId);
-            newFlight.put("scaleLocation", scaleLocationId == null || scaleLocationId.isBlank() ? JSONObject.NULL : scaleLocationId);
-            newFlight.put("departureDate", departureDate.toString());
-            newFlight.put("arrivalDate", arrivalDate.toString());
-            newFlight.put("hoursDurationArrival", durationHour);
-            newFlight.put("minutesDurationArrival", durationMinute);
-            newFlight.put("hoursDurationScale", scaleHour);
-            newFlight.put("minutesDurationScale", scaleMinute);
+            newFlight.put("scaleLocation", scale == null ? JSONObject.NULL : scaleLocationId);
+            newFlight.put("departureDate", departure.toString());
+            newFlight.put("arrivalDate", flight.calculateArrivalDate().toString());
+            newFlight.put("hoursDurationArrival", flight.getHoursDurationArrival());
+            newFlight.put("minutesDurationArrival", flight.getMinutesDurationArrival());
+            newFlight.put("hoursDurationScale", flight.getHoursDurationScale());
+            newFlight.put("minutesDurationScale", flight.getMinutesDurationScale());
 
             flightsArray.put(newFlight);
 
@@ -109,7 +111,7 @@ public class FlightsController {
                 writer.write(flightsArray.toString(4));
             }
 
-            return new Response("Vuelo creado correctamente", Status.CREATED);
+            return new Response("Vuelo creado correctamente", Status.CREATED, flight);
 
         } catch (Exception e) {
             return new Response("Error al procesar el vuelo: " + e.getMessage(), Status.INTERNAL_SERVER_ERROR);
